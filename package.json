@@ -1,0 +1,12 @@
+{
+  "name": "storefront-mfe",
+  "private": true,
+  "version": "1.0.0",
+  "packageManager": "pnpm@8.15.4",
+  "scripts": {
+    "dev": "pnpm -C apps/products dev & pnpm -C apps/container dev",
+    "dev:products": "pnpm -C apps/products dev",
+    "dev:container": "pnpm -C apps/container dev",
+    "build": "pnpm -C apps/products build && pnpm -C apps/container build"
+  }
+}

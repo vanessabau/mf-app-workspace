@@ -1,0 +1,39 @@
+{
+  "name": "container",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "rspack serve --config rspack.config.cjs",
+    "build": "rspack build --config rspack.config.cjs",
+    "lint": "eslint .",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "@tanstack/react-query": "^5.90.5",
+    "@tanstack/react-router": "^1.133.22",
+    "@tanstack/react-router-devtools": "^1.133.22",
+    "jotai": "^2.15.0",
+    "react": "^19.2.0",
+    "react-dom": "^19.2.0"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.36.0",
+    "@module-federation/rspack": "^0.21.1",
+    "@module-federation/sdk": "^0.21.1",
+    "@module-federation/vite": "^1.8.1",
+    "@rspack/cli": "^1.5.8",
+    "@rspack/core": "^1.5.8",
+    "@rspack/dev-server": "^1.1.4",
+    "@rspack/plugin-react-refresh": "^1.5.2",
+    "@types/node": "^24.6.0",
+    "@types/react": "^19.1.16",
+    "@types/react-dom": "^19.1.9",
+    "eslint": "^9.36.0",
+    "eslint-plugin-react-hooks": "^5.2.0",
+    "eslint-plugin-react-refresh": "^0.4.22",
+    "globals": "^16.4.0",
+    "typescript": "~5.9.3",
+    "typescript-eslint": "^8.45.0"
+  }
+}
