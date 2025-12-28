@@ -1,5 +1,6 @@
 // apps/container/rspack.config.cjs
 const path = require("path");
+const rspack = require("@rspack/core");
 const { ModuleFederationPlugin } = require("@module-federation/rspack");
 
 const isDev = process.env.NODE_ENV !== "production";
@@ -11,10 +12,14 @@ module.exports = {
   entry: "./src/main.tsx",
   mode: isDev ? "development" : "production",
   output: {
+    path: path.resolve(__dirname, "dist"),
     publicPath: CONTAINER_URL,
     clean: true,
   },
   plugins: [
+    new rspack.HtmlRspackPlugin({
+      template: "./index.html",
+    }),
     new ModuleFederationPlugin({
       name: "container",
       remotes: {
