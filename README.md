@@ -7,22 +7,24 @@ This project is a **React 19 microfrontend architecture** using **Module Federat
 
 The setup is intentionally minimal, fast, and deployment-friendly.
 
-This application runs locally.
+## 🚀 Live Demo
+
+Visit the deployed application at **[https://mf-app-workspace-container.vercel.app/](https://mf-app-workspace-container.vercel.app/)**
 
 ---
 
 ## ✅ Tech Stack
 
-| Category | Technology |
-|----------|------------|
-| Bundler / Dev Server | **Rspack** |
-| Federation Runtime | `@module-federation/rspack` |
-| Language | TypeScript |
-| UI Framework | React 19 |
-| State (future) | Jotai |
-| Data Layer (future) | TanStack Query |
-| Routing (future) | TanStack Router |
-| Package Manager | pnpm (workspace monorepo) |
+| Category             | Technology                  |
+| -------------------- | --------------------------- |
+| Bundler / Dev Server | **Rspack**                  |
+| Federation Runtime   | `@module-federation/rspack` |
+| Language             | TypeScript                  |
+| UI Framework         | React 19                    |
+| State (future)       | Jotai                       |
+| Data Layer (future)  | TanStack Query              |
+| Routing (future)     | TanStack Router             |
+| Package Manager      | pnpm (workspace monorepo)   |
 
 ---
 
@@ -36,75 +38,81 @@ pnpm-workspace.yaml
 package.json
 
 ---
+
 mf-app-workspace/
 ├── package.json
 ├── pnpm-lock.yaml
 ├── pnpm-workspace.yaml
 ├── node_modules/
 └── apps/
-    ├── container/
-    │   ├── .gitignore
-    │   ├── AGENTS.md
-    │   ├── README.md
-    │   ├── eslint.config.js
-    │   ├── index.html
-    │   ├── package.json
-    │   ├── rspack.config.cjs
-    │   ├── tsconfig.json
-    │   ├── node_modules/
-    │   ├── public/
-    │   │   └── index.html
-    │   ├── @mf-types/
-    │   │   ├── index.d.ts
-    │   │   └── products/
-    │   │       ├── ProductList.d.ts
-    │   │       ├── apis.d.ts
-    │   │       └── compiled-types/
-    │   │           └── ProductList.d.ts
-    │   └── src/
-    │       ├── App.css
-    │       ├── App.tsx
-    │       ├── index.css
-    │       ├── main.tsx
-    │       ├── federation.d.ts
-    │       ├── module-federation.d.ts
-    │       ├── react-env.d.ts
-    │       └── assets/
-    │           └── react.svg
-    │
-    └── products/
-        ├── .gitignore
-        ├── AGENTS.md
-        ├── README.md
-        ├── index.html
-        ├── package.json
-        ├── ProductListWithAdd.tsx
-        ├── rspack.config.cjs
-        ├── tsconfig.json
-        ├── node_modules/
-        └── src/
-            ├── App.css
-            ├── App.tsx
-            ├── ProductList.tsx
-            ├── index.css
-            ├── main.tsx
-            ├── global.d.ts
-            ├── react-env.d.ts
-            └── assets/
-                └── react.svg
+├── container/
+│ ├── .gitignore
+│ ├── AGENTS.md
+│ ├── README.md
+│ ├── eslint.config.js
+│ ├── index.html
+│ ├── package.json
+│ ├── rspack.config.cjs
+│ ├── tsconfig.json
+│ ├── node_modules/
+│ ├── public/
+│ │ └── index.html
+│ ├── @mf-types/
+│ │ ├── index.d.ts
+│ │ └── products/
+│ │ ├── ProductList.d.ts
+│ │ ├── apis.d.ts
+│ │ └── compiled-types/
+│ │ └── ProductList.d.ts
+│ └── src/
+│ ├── App.css
+│ ├── App.tsx
+│ ├── index.css
+│ ├── main.tsx
+│ ├── federation.d.ts
+│ ├── module-federation.d.ts
+│ ├── react-env.d.ts
+│ └── assets/
+│ └── react.svg
+│
+└── products/
+├── .gitignore
+├── AGENTS.md
+├── README.md
+├── index.html
+├── package.json
+├── ProductListWithAdd.tsx
+├── rspack.config.cjs
+├── tsconfig.json
+├── node_modules/
+└── src/
+├── App.css
+├── App.tsx
+├── ProductList.tsx
+├── index.css
+├── main.tsx
+├── global.d.ts
+├── react-env.d.ts
+└── assets/
+└── react.svg
 
 ## ✅ Installation (Fresh Clone)
 
 ```sh
 pnpm install
 ```
+
 ### ✅ Running the Apps (Development)
+
 Start Products Remote
+
 ```bash
 pnpm --filter products dev
 ```
+
 Runs on: http://localhost:3001
 Start Container Host
+
 ```bash
 pnpm --filter container dev
 ```
@@ -112,7 +120,9 @@ pnpm --filter container dev
 Runs on: http://localhost:3000
 
 ## ✅ Module Federation Configuration
+
 Remote: apps/products/rspack.config.cjs
+
 ```js
 new ModuleFederationPlugin({
   name: "products",
@@ -126,9 +136,11 @@ new ModuleFederationPlugin({
   },
   dts: false,
   runtimePlugins: [],
-})
+});
 ```
+
 Host: `apps/container/rspack.config.cjs`
+
 ```js
 new ModuleFederationPlugin({
   name: "container",
@@ -141,17 +153,19 @@ new ModuleFederationPlugin({
   },
   dts: false,
   runtimePlugins: [],
-})
-
+});
 ```
+
 ## ✅ Why This Setup Works
-Win	- Reason
-Rspack + MF plugin	- Fast + native federation support
-No conflicting Vite dev servers	- Fewer moving parts
-eager + singleton shared React	- Avoids runtime share errors
-Disabled type-hint runtime	- Removes noisy websockets & console spam
+
+Win - Reason
+Rspack + MF plugin - Fast + native federation support
+No conflicting Vite dev servers - Fewer moving parts
+eager + singleton shared React - Avoids runtime share errors
+Disabled type-hint runtime - Removes noisy websockets & console spam
 
 ## ✅ Recreating This From Scratch (Quick Start)
+
 # Micro-Frontend Workspace (Rspack + Module Federation)
 
 This repository is a **pnpm monorepo** containing two Rspack-based React applications wired together using **Module Federation**.
@@ -179,28 +193,35 @@ This repository is a **pnpm monorepo** containing two Rspack-based React applica
 - pnpm
 
 Install pnpm if needed:
+
 ```bash
 npm install -g pnpm
 ## Recreate the repo from zero (mf-app-workspace)
 ### 0) Prereqs (no corepack)
 ```
+
 node -v
 pnpm -v
+
 ```
 
 If pnpm isn’t installed:
 ```
+
 npm i -g pnpm
+
 ```
 ### 1) Create repo + scaffold the two apps
 
 (“creation scripts” step)
 ```
+
 mkdir mf-app-workspace
 cd mf-app-workspace
 
 pnpm create rspack@latest apps/container
 pnpm create rspack@latest apps/products
+
 ```
 
 Choose React + TypeScript + EsLint for both.
@@ -223,22 +244,27 @@ tsconfig
 
 Create pnpm-workspace.yaml at the repo root:
 ```
+
 packages:
-  - "apps/*"
+
+- "apps/\*"
+
 ```
 
 (Optional but handy) root package.json:
 ```
+
 {
-  "name": "mf-app-workspace",
-  "private": true,
-  "version": "1.0.0",
-  "scripts": {
-    "dev:products": "pnpm -C apps/products dev",
-    "dev:container": "pnpm -C apps/container dev",
-    "dev": "pnpm -C apps/products dev & pnpm -C apps/container dev"
-  }
+"name": "mf-app-workspace",
+"private": true,
+"version": "1.0.0",
+"scripts": {
+"dev:products": "pnpm -C apps/products dev",
+"dev:container": "pnpm -C apps/container dev",
+"dev": "pnpm -C apps/products dev & pnpm -C apps/container dev"
 }
+}
+
 ```
 ### 3) Set each app to your working dependencies + scripts
 
@@ -396,7 +422,9 @@ There is no additional step here.
 
 Terminal 1 (remote first):
 ```
+
 pnpm --filter products dev
+
 ```
 
 Check:
@@ -406,8 +434,10 @@ Check:
 
 Terminal 2 (host):
 ```
+
 pnpm --filter container dev
-```
+
+````
 
 Open:
 
@@ -449,9 +479,10 @@ Each app has its own `vercel.json` configuration:
   "outputDirectory": "dist",
   "installCommand": "cd ../.. && pnpm install"
 }
-```
+````
 
 **apps/container/vercel.json:**
+
 ```json
 {
   "buildCommand": "pnpm build",
@@ -536,10 +567,12 @@ output: {
 The `HtmlRspackPlugin` generates the HTML files in the dist directory during build.
 
 ## ✅ Next Steps (Planned)
-### Feature	 - Status
-Shared cart via Jotai	⏳
-Fetch products via TanStack Query	⏳
-Routing (TanStack Router)	⏳
+
+### Feature - Status
+
+Shared cart via Jotai ⏳
+Fetch products via TanStack Query ⏳
+Routing (TanStack Router) ⏳
 Deploy container & products on Vercel ✅
 
 ## ✅ Summary
@@ -555,6 +588,7 @@ Independently runnable apps
 A repeatable, teachable, and deployable foundation
 
 To continue, run:
+
 ```js
 pnpm --filter products dev
 pnpm --filter container dev
