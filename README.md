@@ -30,71 +30,64 @@ Visit the deployed application at **[https://mf-app-workspace-container.vercel.a
 
 ## ✅ Monorepo Structure
 
-storefront-mfe/
-apps/
-container/ (host)
-products/ (remote)
-pnpm-workspace.yaml
-package.json
-
----
-
+```
 mf-app-workspace/
 ├── package.json
 ├── pnpm-lock.yaml
 ├── pnpm-workspace.yaml
 ├── node_modules/
 └── apps/
-├── container/
-│ ├── .gitignore
-│ ├── AGENTS.md
-│ ├── README.md
-│ ├── eslint.config.js
-│ ├── index.html
-│ ├── package.json
-│ ├── rspack.config.cjs
-│ ├── tsconfig.json
-│ ├── node_modules/
-│ ├── public/
-│ │ └── index.html
-│ ├── @mf-types/
-│ │ ├── index.d.ts
-│ │ └── products/
-│ │ ├── ProductList.d.ts
-│ │ ├── apis.d.ts
-│ │ └── compiled-types/
-│ │ └── ProductList.d.ts
-│ └── src/
-│ ├── App.css
-│ ├── App.tsx
-│ ├── index.css
-│ ├── main.tsx
-│ ├── federation.d.ts
-│ ├── module-federation.d.ts
-│ ├── react-env.d.ts
-│ └── assets/
-│ └── react.svg
-│
-└── products/
-├── .gitignore
-├── AGENTS.md
-├── README.md
-├── index.html
-├── package.json
-├── ProductListWithAdd.tsx
-├── rspack.config.cjs
-├── tsconfig.json
-├── node_modules/
-└── src/
-├── App.css
-├── App.tsx
-├── ProductList.tsx
-├── index.css
-├── main.tsx
-├── global.d.ts
-├── react-env.d.ts
-└── assets/
-└── react.svg
+    ├── container/
+    │   ├── .gitignore
+    │   ├── AGENTS.md
+    │   ├── README.md
+    │   ├── eslint.config.js
+    │   ├── index.html
+    │   ├── package.json
+    │   ├── rspack.config.cjs
+    │   ├── tsconfig.json
+    │   ├── node_modules/
+    │   ├── public/
+    │   │   └── index.html
+    │   ├── @mf-types/
+    │   │   ├── index.d.ts
+    │   │   └── products/
+    │   │       ├── ProductList.d.ts
+    │   │       ├── apis.d.ts
+    │   │       └── compiled-types/
+    │   │           └── ProductList.d.ts
+    │   └── src/
+    │       ├── App.css
+    │       ├── App.tsx
+    │       ├── index.css
+    │       ├── main.tsx
+    │       ├── federation.d.ts
+    │       ├── module-federation.d.ts
+    │       ├── react-env.d.ts
+    │       └── assets/
+    │           └── react.svg
+    │
+    └── products/
+        ├── .gitignore
+        ├── AGENTS.md
+        ├── README.md
+        ├── index.html
+        ├── package.json
+        ├── ProductListWithAdd.tsx
+        ├── rspack.config.cjs
+        ├── tsconfig.json
+        ├── node_modules/
+        └── src/
+            ├── App.css
+            ├── App.tsx
+            ├── ProductList.tsx
+            ├── index.css
+            ├── main.tsx
+            ├── global.d.ts
+            ├── react-env.d.ts
+            └── assets/
+                └── react.svg
+```
 
 ## ✅ Installation (Fresh Clone)
 
