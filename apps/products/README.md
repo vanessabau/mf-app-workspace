@@ -74,7 +74,7 @@ new ModuleFederationPlugin({
     react: { singleton: true, eager: true, requiredVersion: false },
     "react-dom": { singleton: true, eager: true, requiredVersion: false },
   },
-})
+});
 ```
 
 ### Exposed Components:
