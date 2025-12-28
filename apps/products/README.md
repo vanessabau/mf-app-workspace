@@ -1,36 +1,88 @@
-# Rspack project
+# Products App (Remote)
+
+This is the **remote application** in the Module Federation setup. It exposes components to be consumed by the container (host) app.
 
 ## Setup
 
-Install the dependencies:
+Install the dependencies from the root of the monorepo:
 
 ```bash
+cd ../..
 pnpm install
 ```
 
-## Get started
+## Development
 
-Start the dev server, and the app will be available at <http://localhost:8080>.
+Start the dev server (runs on **http://localhost:3001**):
 
 ```bash
 pnpm run dev
 ```
 
-Build the app for production:
+Or from the root:
+
+```bash
+pnpm --filter products dev
+```
+
+**Note:** Start this app before starting the container app in development.
+
+## Build for Production
+
+Build the app:
 
 ```bash
 pnpm run build
 ```
 
-Preview the production build locally:
+This creates a `dist/` directory with production-ready files, including `remoteEntry.js`.
 
-```bash
-pnpm run preview
+## Deployment (Vercel)
+
+This app is configured for deployment on Vercel with `vercel.json`:
+
+```json
+{
+  "buildCommand": "pnpm build",
+  "outputDirectory": "dist",
+  "installCommand": "cd ../.. && pnpm install"
+}
 ```
+
+### Deployment Steps:
+
+1. Create a Vercel project
+2. Set **Root Directory** to `apps/products`
+3. Add environment variable:
+   - `PRODUCTS_URL` = `https://your-products-app.vercel.app/`
+4. Deploy
+
+**Important:** This app should be deployed **first** before the container app.
+
+## Module Federation Configuration
+
+This app acts as a **remote** and exposes components:
+
+```js
+new ModuleFederationPlugin({
+  name: "products",
+  filename: "remoteEntry.js",
+  exposes: {
+    "./ProductList": "./src/ProductList.tsx",
+  },
+  shared: {
+    react: { singleton: true, eager: true, requiredVersion: false },
+    "react-dom": { singleton: true, eager: true, requiredVersion: false },
+  },
+})
+```
+
+### Exposed Components:
+
+- `./ProductList` - Product listing component
 
 ## Learn more
 
-To learn more about Rspack, check out the following resources:
-
-- [Rspack documentation](https://rspack.rs) - explore Rspack features and APIs.
-- [Rspack GitHub repository](https://github.com/web-infra-dev/rspack) - your feedback and contributions are welcome!
+- [Rspack documentation](https://rspack.rs)
+- [Module Federation documentation](https://module-federation.io/)
+- [Rspack GitHub repository](https://github.com/web-infra-dev/rspack)

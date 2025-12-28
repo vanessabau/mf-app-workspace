@@ -429,12 +429,118 @@ The recreated repo matches the working one 1:1
 
 This is now copy-paste exact for your actual setup.
 
+## ✅ Deployment (GitHub + Vercel)
+
+This application is configured for deployment on Vercel with GitHub integration. Both micro-frontends need to be deployed separately.
+
+### Prerequisites
+
+1. GitHub repository with your code
+2. Two Vercel projects (one for container, one for products)
+
+### Deployment Configuration
+
+Each app has its own `vercel.json` configuration:
+
+**apps/products/vercel.json:**
+```json
+{
+  "buildCommand": "pnpm build",
+  "outputDirectory": "dist",
+  "installCommand": "cd ../.. && pnpm install"
+}
+```
+
+**apps/container/vercel.json:**
+```json
+{
+  "buildCommand": "pnpm build",
+  "outputDirectory": "dist",
+  "installCommand": "cd ../.. && pnpm install"
+}
+```
+
+### Step-by-Step Deployment
+
+#### 1. Deploy Products App (Remote) First
+
+1. Go to Vercel Dashboard → Add New Project
+2. Import your GitHub repository
+3. Configure the project:
+   - **Project Name**: `your-project-products` (e.g., `mf-app-workspace-products`)
+   - **Framework Preset**: Other
+   - **Root Directory**: `apps/products`
+   - **Build Command**: Uses `vercel.json` config
+   - **Output Directory**: Uses `vercel.json` config
+4. Add Environment Variable:
+   - `PRODUCTS_URL` = `https://your-project-products.vercel.app/`
+   - (Use the actual Vercel URL assigned to this deployment)
+5. Deploy
+
+#### 2. Deploy Container App (Host) Second
+
+1. Go to Vercel Dashboard → Add New Project
+2. Import the same GitHub repository
+3. Configure the project:
+   - **Project Name**: `your-project-container` (e.g., `mf-app-workspace-container`)
+   - **Framework Preset**: Other
+   - **Root Directory**: `apps/container`
+   - **Build Command**: Uses `vercel.json` config
+   - **Output Directory**: Uses `vercel.json` config
+4. Add Environment Variables:
+   - `CONTAINER_URL` = `https://your-project-container.vercel.app/`
+   - `PRODUCTS_URL` = `https://your-project-products.vercel.app/`
+   - (Use the actual Vercel URLs from your deployments)
+5. Deploy
+
+#### 3. Verify Deployment
+
+After both apps are deployed:
+
+1. Open the container app URL in your browser
+2. Check the browser console for any errors
+3. Verify that the ProductList component from the remote loads correctly
+
+### Important Notes
+
+- **Always deploy the products (remote) app first**, then the container (host) app
+- Both apps need their production URLs set as environment variables
+- The trailing `/` in URLs is important: `https://app.vercel.app/`
+- After adding or changing environment variables, redeploy the affected apps
+- The rspack configs use these environment variables to configure `publicPath` correctly
+
+### Pushing to GitHub
+
+This repository is configured to push code to GitHub without automatic deployments. To push changes:
+
+```bash
+git add .
+git commit -m "Your commit message"
+git push origin main
+```
+
+Vercel will automatically deploy when you push to the main branch (if you have it configured that way in Vercel project settings).
+
+### Build Configuration
+
+Both apps use Rspack with the following output configuration:
+
+```js
+output: {
+  path: path.resolve(__dirname, "dist"),
+  publicPath: CONTAINER_URL, // or PRODUCTS_URL
+  clean: true,
+}
+```
+
+The `HtmlRspackPlugin` generates the HTML files in the dist directory during build.
+
 ## ✅ Next Steps (Planned)
 ### Feature	 - Status
 Shared cart via Jotai	⏳
 Fetch products via TanStack Query	⏳
 Routing (TanStack Router)	⏳
-Deploy container & products on Vercel ⏳
+Deploy container & products on Vercel ✅
 
 ## ✅ Summary
 
