@@ -157,9 +157,7 @@ No conflicting Vite dev servers - Fewer moving parts
 eager + singleton shared React - Avoids runtime share errors
 Disabled type-hint runtime - Removes noisy websockets & console spam
 
-## ✅ Recreating This From Scratch (Quick Start)
-
-# Micro-Frontend Workspace (Rspack + Module Federation)
+## Micro-Frontend Workspace (Rspack + Module Federation)
 
 This repository is a **pnpm monorepo** containing two Rspack-based React applications wired together using **Module Federation**.
 
@@ -180,6 +178,8 @@ This repository is a **pnpm monorepo** containing two Rspack-based React applica
 
 ---
 
+## ✅ Recreating This From Scratch (Quick Start)
+
 ## Prerequisites
 
 - Node.js (v18+ recommended)
@@ -196,19 +196,17 @@ npm install -g pnpm
 node -v
 pnpm -v
 
-```
-
+```bash
 If pnpm isn’t installed:
 ```
 
 npm i -g pnpm
 
-```
+````bash
 ### 1) Create repo + scaffold the two apps
 
 (“creation scripts” step)
-```
-
+```bash
 mkdir mf-app-workspace
 cd mf-app-workspace
 
@@ -216,7 +214,6 @@ pnpm create rspack@latest apps/container
 pnpm create rspack@latest apps/products
 
 ```
-
 Choose React + TypeScript + EsLint for both.
 
 This is what produces the real application scaffolding:
@@ -233,11 +230,11 @@ assets
 
 tsconfig
 
-### 2) Turn it into a pnpm workspace
+2) Turn it into a pnpm workspace
 
 Create pnpm-workspace.yaml at the repo root:
-```
 
+```js
 packages:
 
 - "apps/\*"
@@ -245,8 +242,8 @@ packages:
 ```
 
 (Optional but handy) root package.json:
-```
 
+```js
 {
 "name": "mf-app-workspace",
 "private": true,
@@ -259,7 +256,8 @@ packages:
 }
 
 ```
-### 3) Set each app to your working dependencies + scripts
+
+3) Set each app to your working dependencies + scripts
 
 Replace the following files with your known working versions:
 
@@ -273,19 +271,19 @@ products runs:
 
 `MF_DISABLE_TYPEHINTS=1 rspack serve`
 
-
 container runs:
 
 `rspack serve --config rspack.config.cjs`
 
-
 These scripts are part of why the setup runs cleanly.
 
-### 4) Install dependencies (root)
+4) Install dependencies (root)
+
 pnpm install
 
-### 5) Add the Module Federation Rspack configs
-#### 5a) apps/products/rspack.config.cjs (remote, port 3001)
+5) Add the Module Federation Rspack configs
+
+5a) apps/products/rspack.config.cjs (remote, port 3001)
 
 This config must:
 
@@ -303,7 +301,7 @@ have dts: false and runtimePlugins: []
 
 Use your working apps/products/rspack.config.cjs.
 
-### 5b) apps/container/rspack.config.cjs (host, port 3000)
+5b) apps/container/rspack.config.cjs (host, port 3000)
 
 Use your exact working file:
 
@@ -313,16 +311,15 @@ remote:
 
 products@http://localhost:3001/remoteEntry.js
 
-
 same shared React singleton config
 
 dts: false
 
 runtimePlugins: []
 
-### 6) Put the remote component in the right place
-apps/products/src/ProductList.tsx
+6) Put the remote component in the right place
 
+apps/products/src/ProductList.tsx
 
 Use your real component (iPhone / MacBook / iPad list).
 
@@ -332,7 +329,6 @@ It currently lives at:
 
 apps/products/ProductListWithAdd.tsx
 
-
 (outside src/)
 
 If you want to expose it too, you must either:
@@ -341,7 +337,7 @@ move it into src/, or
 
 expose it from its current path in rspack.config.cjs
 
-### 7) Ensure each app’s public/index.html exists
+7) Ensure each app’s public/index.html exists
 
 Your configs serve the public/ directory.
 
@@ -350,22 +346,19 @@ Required files:
 apps/products/public/index.html
 apps/container/public/index.html
 
-
 Each must include:
 
 <div id="root"></div>
 <script type="module" src="/src/main.tsx"></script>
 
-
 If index.html also exists at the app root, it is ignored in dev.
 public/index.html is the one that matters.
 
-### 8) Container consumes the remote
+8) Container consumes the remote
 
 In the container app (usually App.tsx or main.tsx):
 
 const ProductList = React.lazy(() => import("products/ProductList"));
-
 
 ✅ In your repo, TypeScript is handled by:
 
@@ -379,7 +372,7 @@ You should NOT add a manual
 declare module "products/ProductList"
 unless you remove this setup.
 
-### 9) TypeScript + @mf-types (IMPORTANT: no generation step)
+9) TypeScript + @mf-types (IMPORTANT: no generation step)
 
 There is no command in this repo that generates @mf-types.
 
@@ -396,7 +389,6 @@ Live DTS generation is intentionally disabled:
 dts: false
 runtimePlugins: []
 
-
 To recreate this repo exactly:
 
 Copy the apps/container/@mf-types directory from the working repository
@@ -406,16 +398,15 @@ Ensure these files exist:
 apps/container/src/federation.d.ts
 apps/container/src/module-federation.d.ts
 
-
 Those files bridge the remote module names to the pre-generated types.
 
 There is no additional step here.
 
-### 10) Run locally (two terminals)
+10) Run locally (two terminals)
 
 Terminal 1 (remote first):
-```
 
+```bash
 pnpm --filter products dev
 
 ```
@@ -424,13 +415,12 @@ Check:
 
 `http://localhost:3001/remoteEntry.js`
 
-
 Terminal 2 (host):
-```
 
+```bash
 pnpm --filter container dev
 
-````
+```
 
 Open:
 
@@ -466,13 +456,14 @@ This application is configured for deployment on Vercel with GitHub integration.
 Each app has its own `vercel.json` configuration:
 
 **apps/products/vercel.json:**
+
 ```json
 {
   "buildCommand": "pnpm build",
   "outputDirectory": "dist",
   "installCommand": "cd ../.. && pnpm install"
 }
-````
+```
 
 **apps/container/vercel.json:**
 
@@ -586,3 +577,4 @@ To continue, run:
 pnpm --filter products dev
 pnpm --filter container dev
 ```
+````
